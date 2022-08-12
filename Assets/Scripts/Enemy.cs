@@ -18,15 +18,10 @@ public class Enemy : MonoBehaviour
         _healthPoints = _hearts.Count;
     }
 
-    private void OnMouseDown()
+    public void GetDamage()
     {
-        if (!_isDead && _isMortal)
-            GetDamage();
-    }
-
-    private void GetDamage()
-    {
-        Gun.gun.Hit(transform.position);
+        if (_isDead || !_isMortal)
+            return;
         _hearts[_hearts.Count - _healthPoints].sprite = _fallHeart;
         _healthPoints -= 1;
         if (_healthPoints == 0)

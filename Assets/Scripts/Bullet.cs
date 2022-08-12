@@ -12,15 +12,21 @@ public class Bullet : MonoBehaviour
         transform.position += _direction * Time.deltaTime * _moveSpeed;
     }
 
-    void OnCollisionEnter(Collision hit)
-    {
-        _direction = Vector3.zero;
-        transform.localPosition = Vector3.zero;
-    }
-
     public void Fire(Vector3 destination)
     {
         transform.localPosition = Vector3.zero;
         _direction = destination - transform.position;
+        Invoke("ReturnBullet", 2f);
+    }
+
+    private void ReturnBullet()
+    {
+        transform.position = _bulletPool.position;
+        _direction = Vector3.zero;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ReturnBullet();
     }
 }
